@@ -1,33 +1,30 @@
 trigger:
-- main
+  - main
 
 pool:
-  name: 'Default'
+  name: "Default"
 
 variables:
-  # Nombre del Service Connection SSH que configuraste en Azure DevOps
-  sshConnection: 'MyVmSSH'
-  # Carpeta de destino en la VM donde se copiará la página
-  targetFolder: '/var/www/html'
+  sshConnection: "MyVmSSH"
+  targetFolder: "/var/www/html"
 
 steps:
-- checkout: self
+  - checkout: self
 
-# Instalar Apache y crear la página HTML directamente en la VM
-- task: SSH@0
-  inputs:
-    sshEndpoint: $(sshConnection)
-    runOptions: 'commands'
-    commands: |
-      set -e
-      echo "Actualizando paquetes..."
-      sudo apt update -y
-      echo "Instalando Apache..."
-      sudo apt install -y apache2
-      echo "Creando carpeta destino si no existe..."
-      sudo mkdir -p $(targetFolder)
-      echo "Configurando la página HTML..."
-      echo 'Hola Mundo, despliegue de máquina virtual desde Azure DevOps Caro - Briceño - Davila' | sudo tee $(targetFolder)/index.html
-      echo "Reiniciando Apache..."
-      sudo systemctl restart apache2
-      echo "Despliegue completado."
+  - task: SSH@0
+    inputs:
+      sshEndpoint: $(sshConnection)
+      runOptions: "commands"
+      commands: |
+        set -e
+        echo "Actualizando paquetes..."
+        sudo apt-get update -y
+        echo "Instalando Apache..."
+        sudo apt-get install -y apache2
+        echo "Creando carpeta destino si no existe..."
+        sudo mkdir -p $(targetFolder)
+        echo "Configurando la página HTML..."
+        echo 'Hola Mundo, despliegue de máquina virtual desde Azure DevOps Caro - Briceño - Davila' | sudo tee $(targetFolder)/index.html
+        echo "Reiniciando Apache..."
+        sudo systemctl restart apache2
+        echo "Despliegue completado."
