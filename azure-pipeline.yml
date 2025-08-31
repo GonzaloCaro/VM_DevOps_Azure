@@ -2,10 +2,10 @@ trigger:
 - main
 
 pool:
-  vmImage: 'ubuntu-latest'
+  name: 'Default'
 
 variables:
-  # Nombre del Service Connection SSH que configuraste en Azure DevOps
+  # Nombre del Service Connection SSH que configuramos en Azure DevOps
   sshConnection: 'MyVmSSH'
   # Carpeta de destino en la VM donde se copiará la página
   targetFolder: '/var/www/html'
